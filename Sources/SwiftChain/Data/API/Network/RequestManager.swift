@@ -10,7 +10,7 @@ public final class RequestManager {
   
   // MARK: - Singleton Instance
   
-  static let shared = RequestManager()
+  public static let shared = RequestManager()
   
   // MARK: - Properties
   
