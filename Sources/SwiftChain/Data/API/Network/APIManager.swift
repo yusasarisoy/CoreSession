@@ -3,7 +3,7 @@ import Foundation
 // MARK: - APIManagerProtocol
 
 protocol APIManagerProtocol {
-  func makeRequest(_ request: RequestProtocol) async throws -> Data
+  func makeRequest(from request: RequestProtocol) async throws -> Data
 }
 
 // MARK: - APIManager
@@ -24,7 +24,7 @@ final class APIManager {
 // MARK: - APIManagerProtocol
 
 extension APIManager: APIManagerProtocol {
-  func makeRequest(_ request: RequestProtocol) async throws -> Data {
+  func makeRequest(from request: RequestProtocol) async throws -> Data {
     let (data, response) = try await urlSession.data(for: request.createURLRequest())
     guard let httpResponse = response as? HTTPURLResponse,
           httpResponse.statusCode == 200
