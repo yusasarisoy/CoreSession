@@ -1,6 +1,6 @@
 // MARK: - RequestManagerProtocol
 
-protocol RequestManagerProtocol {
+public protocol RequestManagerProtocol {
   func makeRequest<Element: Decodable>(from request: RequestProtocol) async throws -> Element
 }
 
