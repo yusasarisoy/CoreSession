@@ -5,14 +5,13 @@ public protocol RequestManagerProtocol {
 }
 
 // MARK: - RequestManager
-
-final class RequestManager {
+public final class RequestManager {
   
   // MARK: - Properties
   
   let apiManager: APIManagerProtocol
   let parser: DataParserProtocol
-
+  
   // MARK: - Initialization
   
   init(
@@ -27,7 +26,7 @@ final class RequestManager {
 // MARK: - RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
-  func makeRequest<Element: Decodable>(from request: RequestProtocol) async throws -> Element {
+  public func makeRequest<Element: Decodable>(from request: RequestProtocol) async throws -> Element {
     let data = try await apiManager.makeRequest(from: request)
     let decoded: Element = try parser.parse(data: data)
     return decoded
