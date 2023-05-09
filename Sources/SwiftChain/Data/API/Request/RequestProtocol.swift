@@ -1,6 +1,6 @@
 import Foundation
 
-protocol RequestProtocol {
+public protocol RequestProtocol {
   var path: String { get }
   var requestType: RequestType { get }
   var params: [String: Any] { get }
