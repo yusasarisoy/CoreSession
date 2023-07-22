@@ -2,13 +2,13 @@ import Foundation
 
 // MARK: - DataParserProtocol
 
-protocol DataParserProtocol {
+public protocol DataParserProtocol {
   func parse<Element: Decodable>(data: Data) throws -> Element
 }
 
 // MARK: - DataParser
 
-final class DataParser {
+public final class DataParser {
   
   // MARK: - Properties
 
@@ -16,7 +16,7 @@ final class DataParser {
 
   // MARK: - Initialization
   
-  init(jsonDecoder: JSONDecoder = JSONDecoder()) {
+  public init(jsonDecoder: JSONDecoder = JSONDecoder()) {
     self.jsonDecoder = jsonDecoder
   }
 }
@@ -24,7 +24,7 @@ final class DataParser {
 // MARK: - DataParserProtocol
 
 extension DataParser: DataParserProtocol {
-  func parse<Element: Decodable>(data: Data) throws -> Element {
+  public func parse<Element: Decodable>(data: Data) throws -> Element {
     try jsonDecoder.decode(
       Element.self,
       from: data

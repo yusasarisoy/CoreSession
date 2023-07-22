@@ -2,13 +2,13 @@ import Foundation
 
 // MARK: - APIManagerProtocol
 
-protocol APIManagerProtocol {
+public protocol APIManagerProtocol {
   func makeRequest(from request: RequestProtocol) async throws -> Data
 }
 
 // MARK: - APIManager
 
-final class APIManager {
+public final class APIManager {
   
   // MARK: - Properties
   
@@ -16,7 +16,7 @@ final class APIManager {
 
   // MARK: - Initialization
   
-  init(urlSession: URLSession = URLSession.shared) {
+  public init(urlSession: URLSession = URLSession.shared) {
     self.urlSession = urlSession
   }
 }
@@ -24,7 +24,7 @@ final class APIManager {
 // MARK: - APIManagerProtocol
 
 extension APIManager: APIManagerProtocol {
-  func makeRequest(from request: RequestProtocol) async throws -> Data {
+  public func makeRequest(from request: RequestProtocol) async throws -> Data {
     let (data, response) = try await urlSession.data(for: request.createURLRequest())
     guard let httpResponse = response as? HTTPURLResponse,
           httpResponse.statusCode == 200

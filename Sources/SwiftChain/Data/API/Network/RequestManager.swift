@@ -8,10 +8,6 @@ public protocol RequestManagerProtocol {
 
 public final class RequestManager {
   
-  // MARK: - Singleton Instance
-  
-  public static let shared = RequestManager()
-  
   // MARK: - Properties
   
   let apiManager: APIManagerProtocol
@@ -19,7 +15,7 @@ public final class RequestManager {
 
   // MARK: - Initialization
   
-  init(
+  public init(
     apiManager: APIManagerProtocol = APIManager(),
     parser: DataParserProtocol = DataParser()
   ) {
