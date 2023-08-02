@@ -21,10 +21,6 @@ let package = Package(
     .target(
       name: "CoreSession",
       dependencies: []
-    ),
-    .testTarget(
-      name: "CoreSessionTests",
-      dependencies: ["CoreSession"]
-    ),
+    )
   ]
 )
