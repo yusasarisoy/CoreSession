@@ -5,26 +5,26 @@
 import PackageDescription
 
 let package = Package(
-  name: "SwiftChain",
+  name: "CoreSession",
   platforms: [
     .iOS(.v15),
     .macOS(.v13)
   ],
   products: [
     .library(
-      name: "SwiftChain",
-      targets: ["SwiftChain"]
+      name: "CoreSession",
+      targets: ["CoreSession"]
     ),
   ],
   dependencies: [],
   targets: [
     .target(
-      name: "SwiftChain",
+      name: "CoreSession",
       dependencies: []
     ),
     .testTarget(
-      name: "SwiftChainTests",
-      dependencies: ["SwiftChain"]
+      name: "CoreSessionTests",
+      dependencies: ["CoreSession"]
     ),
   ]
 )
