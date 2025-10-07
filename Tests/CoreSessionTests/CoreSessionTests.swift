@@ -14,8 +14,8 @@ struct CoreSessionSuite {
   
   @Test("Defaults: scheme & host not empty")
   func defaultsNotEmpty() async {
-    let scheme = await CoreSession.shared.scheme
-    let host = await CoreSession.shared.host
+    let scheme = CoreSessionManager.shared.scheme
+    let host = CoreSessionManager.shared.host
     #expect(!scheme.isEmpty)
     #expect(!host.isEmpty)
   }
@@ -30,11 +30,11 @@ struct CoreSessionSuite {
     ]
     
     // When
-    let url = await CoreSession.shared.makeURL(path, query: params)
+    let url = CoreSessionManager.shared.makeURL(path, query: params)
     
     // Then
-    let scheme = await CoreSession.shared.scheme
-    let host   = await CoreSession.shared.host
+    let scheme = CoreSessionManager.shared.scheme
+    let host = CoreSessionManager.shared.host
     #expect(url.scheme == scheme)
     #expect(url.host == host)
     #expect(url.path == path)

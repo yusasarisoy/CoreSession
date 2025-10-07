@@ -14,8 +14,8 @@ extension RequestProtocol {
     [:]
   }
   
-  public nonisolated func createURLRequest() async throws -> URLRequest {
-    let url = await CoreSession.shared.makeURL(path, query: urlParams)
+  public nonisolated func createURLRequest() throws -> URLRequest {
+    let url = CoreSessionManager.shared.makeURL(path, query: urlParams)
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = requestType.rawValue
     urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
