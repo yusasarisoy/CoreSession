@@ -1,6 +1,10 @@
 import Foundation
 
+// MARK: - RequestProtocol
+
 public protocol RequestProtocol {
+  associatedtype Response: Decodable
+
   var path: String { get }
   var requestType: RequestType { get }
   var params: [String: Any] { get }
