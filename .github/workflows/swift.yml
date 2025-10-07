@@ -1,4 +1,4 @@
-name: Swift (iOS Build)
+name: Swift (iOS)
 
 on:
   push:
@@ -11,23 +11,24 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Select Xcode
+      - name: Select Xcode 16.4
         run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
-      - name: Create iOS 15 destination
+      - name: Create iOS15 (Simulator) destination
         run: |
-          SDK=$(xcrun --sdk iphoneos --show-sdk-path)
-          TOOLBIN="/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
-          cat > ios15.json <<JSON
+          SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
+          TOOLBIN="$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+          cat > ios15-sim.json <<JSON
           {
             "version": 1,
-            "target": "arm64-apple-ios15.0",
+            "target": "arm64-apple-ios15.0-simulator",
             "sdk": "${SDK}",
-            "toolchainBinDir": "${TOOLBIN}"
+            "toolchain-bin-dir": "${TOOLBIN}"
           }
           JSON
+          cat ios15-sim.json
 
-      - name: Build (iOS)
-        run: swift build --destination ios15.json -v
+      - name: Build (iOS Simulator)
+        run: swift build --destination ios15-sim.json -v
