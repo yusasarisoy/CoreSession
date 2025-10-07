@@ -18,34 +18,15 @@ extension RequestProtocol {
     [:]
   }
 
-  var urlParams: [String: String?] {
+  public nonisolated var urlParams: [String: String?] {
     [:]
   }
 
-  func createURLRequest() throws -> URLRequest {
-    var urlComponents = URLComponents()
-    urlComponents.scheme = "https"
-    urlComponents.host = host
-    urlComponents.path = path
-
-    if !urlParams.isEmpty {
-      urlComponents.queryItems = urlParams.map { URLQueryItem(name: $0, value: $1) }
-    }
-
-    guard let url = urlComponents.url else { throw NetworkError.invalidURL }
-
+  public nonisolated func createURLRequest() throws -> URLRequest {
+    let url = CoreSession.shared.makeURL(path, query: urlParams)
     var urlRequest = URLRequest(url: url)
     urlRequest.httpMethod = requestType.rawValue
-
-    urlRequest.setValue(
-      "application/json",
-      forHTTPHeaderField: "Content-Type"
-    )
-
-    if !params.isEmpty {
-      urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params)
-    }
-
+    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
     return urlRequest
   }
 }
