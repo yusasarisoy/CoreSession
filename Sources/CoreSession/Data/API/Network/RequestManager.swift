@@ -14,7 +14,7 @@ public final class RequestManager {
   
   private let urlSession: URLSession
   private let parser: DataParserProtocol
-
+  
   // MARK: - Initialization
   
   public init(
