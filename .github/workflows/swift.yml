@@ -16,11 +16,9 @@ jobs:
       - name: Select Xcode 16.4
         run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
-      # (Opsiyonel) Şema adını görmek için:
       - name: List schemes
-        run: xcodebuild -list -json -package-path .
+        run: xcodebuild -list -json
 
-      # ÖNEMLİ: Şema adı genelde <PackageName>-Package olur (CoreSession-Package).
       - name: Build for iOS Simulator
         run: |
           xcodebuild \
