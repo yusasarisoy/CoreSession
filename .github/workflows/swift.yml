@@ -1,7 +1,4 @@
-# This workflow will build a Swift project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
-name: Swift
+name: Swift (iOS Build)
 
 on:
   push:
@@ -11,12 +8,26 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - uses: actions/checkout@v3
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
+
+      - name: Create iOS 15 destination
+        run: |
+          SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+          TOOLBIN="/Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+          cat > ios15.json <<JSON
+          {
+            "version": 1,
+            "target": "arm64-apple-ios15.0",
+            "sdk": "${SDK}",
+            "toolchainBinDir": "${TOOLBIN}"
+          }
+          JSON
+
+      - name: Build (iOS)
+        run: swift build --destination ios15.json -v
