@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class CoreSession {
+public actor CoreSession {
     
     // MARK: - Properties
     

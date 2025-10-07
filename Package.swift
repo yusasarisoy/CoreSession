@@ -1,26 +1,21 @@
-// swift-tools-version: 5.7
-// The swift-tools-version declares the minimum version of
-// Swift required to build this package.
-
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
   name: "CoreSession",
   platforms: [
-    .iOS(.v15),
-    .macOS(.v13)
+    .iOS(.v15)
   ],
   products: [
-    .library(
-      name: "CoreSession",
-      targets: ["CoreSession"]
-    ),
+    .library(name: "CoreSession", targets: ["CoreSession"]),
   ],
   dependencies: [],
   targets: [
-    .target(
-      name: "CoreSession",
-      dependencies: []
+    .target(name: "CoreSession"),
+    .testTarget(
+      name: "CoreSessionTests",
+      dependencies: ["CoreSession"],
+      path: "Tests/CoreSessionTests"
     )
   ]
 )

@@ -23,12 +23,9 @@ extension ExampleRequest: RequestProtocol {
   var urlParams: [String: String?] {
     switch self {
     case let .fetchExampleData(page):
-      var params: [String: String?] = [
+      let params: [String: String?] = [
         "limit": String(page)
       ]
-      if let key = APIConstant.apiKey {
-        params["api_key"] = key
-      }
       return params
     }
   }
