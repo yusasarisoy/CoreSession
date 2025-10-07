@@ -1,7 +1,9 @@
+import Foundation
+
 // MARK: - RequestManagerProtocol
 
 public protocol RequestManagerProtocol {
-  func makeRequest<Element: Decodable>(from request: RequestProtocol) async throws -> Element
+  func makeRequest<Request: RequestProtocol>(_ request: Request) async throws -> Request.Response
 }
 
 // MARK: - RequestManager
@@ -10,16 +12,16 @@ public final class RequestManager {
   
   // MARK: - Properties
   
-  let apiManager: APIManagerProtocol
-  let parser: DataParserProtocol
+  private let urlSession: URLSession
+  private let parser: DataParserProtocol
 
   // MARK: - Initialization
   
   public init(
-    apiManager: APIManagerProtocol = APIManager(),
+    urlSession: URLSession = .shared,
     parser: DataParserProtocol = DataParser()
   ) {
-    self.apiManager = apiManager
+    self.urlSession = urlSession
     self.parser = parser
   }
 }
@@ -27,9 +29,17 @@ public final class RequestManager {
 // MARK: - RequestManagerProtocol
 
 extension RequestManager: RequestManagerProtocol {
-  public func makeRequest<Element: Decodable>(from request: RequestProtocol) async throws -> Element {
-    let data = try await apiManager.makeRequest(from: request)
-    let decoded: Element = try parser.parse(data: data)
-    return decoded
+  public func makeRequest<Request: RequestProtocol>(_ request: Request) async throws -> Request.Response {
+    let (data, response) = try await urlSession.data(for: request.createURLRequest())
+    guard let http = response as? HTTPURLResponse,
+          (200...299).contains(http.statusCode) else {
+      throw NetworkError.invalidServerResponse
+    }
+    
+    do {
+      return try parser.parse(Request.Response.self, from: data)
+    } catch {
+      throw NetworkError.dataParsingFailed
+    }
   }
 }
